@@ -2,7 +2,16 @@
 #include <stdlib.h>
 
 /*Buscaminas*/
+struct casilla{
+	char tipo;
+	int estado;
+	int numMinas;
+	char etiquetas;
+	
+};
+typedef struct casillas tipocasilla;
 
+	
 void inicializarJuego(int filas,int columnas,int **matrix){
 	int i,j;
 	for(i = 0; i < filas; i++){
