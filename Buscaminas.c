@@ -98,7 +98,7 @@ void AsignarNumeros(int filas, int columnas,tipocasilla **tablero){
 						contador+=1;
 					}
 					if (tablero[i-1][j-1].tipo == 'M'){
-					contador+=1;
+						contador+=1;
 					}
 				}
 				else if (j==0 && i!=0 && i!=(filas-1)){ //casillas con j = 0
