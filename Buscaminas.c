@@ -89,6 +89,7 @@ void AsignarNumeros(int filas, int columnas,tipocasilla **tablero){
 						contador+=1;
 					}
 				}
+
 				else if (i==(filas-1) && j==(columnas-1)){ //esquina derecha abajo
 					if (tablero[i][j-1].tipo == 'M'){
 						contador+=1;
@@ -201,19 +202,34 @@ void AsignarNumeros(int filas, int columnas,tipocasilla **tablero){
 						contador+=1;
 					}
 					
-				}	
+				}		
 				
 			}
 			else{
 				contador=0;
 			}	
-		tablero[i][j].numMinas = contador;	
+
+		tablero[i][j].numMinas = contador;
+		
 		}
 		
 	}
 	
 }
 
+void DeterminarTipo(int filas, int columnas, tipocasilla **tablero){
+	int contador=0;
+	int i,j;
+	for(i = 0; i < filas; i++){
+		for(j=0; j < columnas; j++){
+			if(tablero[i][j].numMinas != 0){
+				tablero[i][j].tipo = 'N';
+			}	
+		}
+	}	
+
+
+}
 
 void EmpezarJuego(){
 	printf("\n\t \t   ============================\n");
@@ -229,9 +245,13 @@ void dibujarJuego(int filas, int columnas, tipocasilla **tablero){
 	for (i=0; i < filas; i++){
 		printf("\t\t\t");
 		for(j=0; j < columnas; j++){
-			
-			printf("[%c,%d]",tablero[i][j].etiqueta,tablero[i][j].numMinas);
-			
+			if (tablero[i][j].estado == 0 || tablero[i][j].tipo == 'M'){
+				printf("[%c]",tablero[i][j].etiqueta);
+			}	
+			else{
+				printf("[%d]",tablero[i][j].numMinas);
+			}	
+				
 		}
 		printf("\n");
 		
@@ -240,7 +260,8 @@ void dibujarJuego(int filas, int columnas, tipocasilla **tablero){
 }
 
 
-void AbrirCasilla(int filas,int columnas,tipocasilla **tablero){
+
+int AbrirCasilla(int filas,int columnas,tipocasilla **tablero){
 	int x,y,z=0;
 	
 	while (z < (filas*columnas+10)){
@@ -258,16 +279,16 @@ void AbrirCasilla(int filas,int columnas,tipocasilla **tablero){
 		else{
 			tablero[x][y].estado = 1;
 			tablero[x][y].etiqueta = tablero[x][y].tipo;
-			dibujarJuego(filas,columnas,tablero);
+			dibujarJuego(filas,columnas,tablero);	
 			if (tablero[x][y].etiqueta == 'M'){
 				printf("\n");
-				printf("\t \t \t XXXXXX GAME OVER XXXXXXX\n");
+				printf("\t \t \t ----- GAME OVER -----\n");
 				break;
 			}	
 		}
 		z++;
 	}
-	
+	return 0;
 }	
 
 int main(int argc,char *argv[]){
@@ -278,6 +299,7 @@ int main(int argc,char *argv[]){
 	tablero = inicializarJuego(filas,columnas);
 	AsignarMinas(filas,columnas,tablero,numeroMinas);
 	AsignarNumeros(filas,columnas,tablero);
+	DeterminarTipo(filas,columnas,tablero);
 	EmpezarJuego();
 	dibujarJuego(filas,columnas,tablero);
 	AbrirCasilla(filas,columnas,tablero);
