@@ -36,9 +36,13 @@ void AsignarMinas(int filas, int columnas, tipocasilla **tablero,int numeroMinas
 	int posFila,posColum;
 	while ( m < numeroMinas){
 		posFila = rand() % filas;
-		posColum = rand() % columnas;
-		tablero[posFila][posColum].tipo = 'M';
-		m++;
+		posColum =  rand() % columnas;
+		if (tablero[posFila][posColum].tipo != 'M'){
+			
+			tablero[posFila][posColum].tipo = 'M';
+			m++;
+		}
+			
 	}
 			
 }
