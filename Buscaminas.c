@@ -54,6 +54,7 @@ void AsignarNumeros(int filas, int columnas,tipocasilla **tablero){
 	int i,j;
 	for(i = 0; i < filas; i++){
 		for(j=0; j < columnas; j++){
+			contador=0;
 			if (tablero[i][j].tipo == 'C'){
 				if (i==0 && j==0){   //esquina izquierda arriba
 					if (tablero[i+1][j].tipo == 'M'){
