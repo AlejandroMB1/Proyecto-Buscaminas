@@ -282,7 +282,7 @@ int Ganar(int filas, int columnas,tipocasilla **tablero,int numeroMinas){
 
 
 
-int AbrirCasilla(int filas,int columnas,tipocasilla **tablero){
+int AbrirCasilla(int filas,int columnas,tipocasilla **tablero,int numeroMinas){
 	int x,y,r,z=0;
 	
 	while (z < (filas*columnas+10)){
@@ -304,6 +304,7 @@ int AbrirCasilla(int filas,int columnas,tipocasilla **tablero){
 			r=Ganar(filas,columnas,tablero,numeroMinas);
 			if (r==1){
 				break;
+			}	
 			if (tablero[x][y].etiqueta == 'M'){
 				printf("\n");
 				printf("\t \t \t ----- GAME OVER -----\n");
@@ -326,6 +327,6 @@ int main(int argc,char *argv[]){
 	DeterminarTipo(filas,columnas,tablero);
 	EmpezarJuego();
 	dibujarJuego(filas,columnas,tablero);
-	AbrirCasilla(filas,columnas,tablero);
+	AbrirCasilla(filas,columnas,tablero,numeroMinas);
 	return 0;
 }
