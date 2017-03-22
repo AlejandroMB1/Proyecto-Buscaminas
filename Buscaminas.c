@@ -259,10 +259,31 @@ void dibujarJuego(int filas, int columnas, tipocasilla **tablero){
 	
 }
 
+int Ganar(int filas, int columnas,tipocasilla **tablero,int numeroMinas){
+	int i,j,contador=0;
+	printf("\n");
+	for (i=0; i < filas; i++){
+		for(j=0; j < columnas; j++){
+			if (tablero[i][j].estado == 1 && tablero[i][j].tipo != 'M'){
+				contador+=1;
+				if(contador==(filas*columnas-numeroMinas)){
+					printf("\tFELICIDADES AMIGUITO! USTED HA GANADO!!!\n");
+					return 1;
+				}	
+			}	
+	
+	
+		}
+	
+	}
+
+}	
+
+
 
 
 int AbrirCasilla(int filas,int columnas,tipocasilla **tablero){
-	int x,y,z=0;
+	int x,y,r,z=0;
 	
 	while (z < (filas*columnas+10)){
 		printf("\n");
@@ -279,7 +300,10 @@ int AbrirCasilla(int filas,int columnas,tipocasilla **tablero){
 		else{
 			tablero[x][y].estado = 1;
 			tablero[x][y].etiqueta = tablero[x][y].tipo;
-			dibujarJuego(filas,columnas,tablero);	
+			dibujarJuego(filas,columnas,tablero);
+			r=Ganar(filas,columnas,tablero,numeroMinas);
+			if (r==1){
+				break;
 			if (tablero[x][y].etiqueta == 'M'){
 				printf("\n");
 				printf("\t \t \t ----- GAME OVER -----\n");
