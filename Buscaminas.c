@@ -25,7 +25,7 @@ tipocasilla  **inicializarJuego(int filas,int columnas){
 			matrix[i][j].etiqueta = '#';
 			matrix[i][j].tipo = 'C';
 			matrix[i][j].numMinas = 0;
-			matrix[i][j].bandera = '*';
+			matrix[i][j].bandera = '!';
 		}
 	
 	}
