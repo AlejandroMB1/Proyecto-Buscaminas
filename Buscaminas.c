@@ -8,6 +8,7 @@ struct casilla{
 	int estado;
 	int numMinas;
 	char etiqueta;
+	char bandera;
 		
 };
 typedef struct casilla tipocasilla;
@@ -24,6 +25,7 @@ tipocasilla  **inicializarJuego(int filas,int columnas){
 			matrix[i][j].etiqueta = '#';
 			matrix[i][j].tipo = 'C';
 			matrix[i][j].numMinas = 0;
+			matrix[i][j].bandera = '*';
 		}
 	
 	}
@@ -231,16 +233,29 @@ void DeterminarTipo(int filas, int columnas, tipocasilla **tablero){
 
 }
 
-void EmpezarJuego(){
-	printf("\n\t \t   ============================\n");
-	printf("  \t \t           BUSCAMINAS              ");
-	printf("\n\t \t   ============================\n");
+int Preguntar(){
+	int m;
+	printf("Poner una bandera[0]\n");
 	
+	printf("Abrir una casilla[1]\n");
+	printf("\n");
+	printf("Que debo hacer?: ");
+	
+	scanf("%d",&m);
+	if (m==0){
+		return 0;	
+	}	
+	else if(m==1){
+		return 1;
+	}	
 }	
 	
 
 void dibujarJuego(int filas, int columnas, tipocasilla **tablero){
 	int i,j;
+	printf("\n\t \t        ============================\n");
+	printf("  \t \t                BUSCAMINAS            ");
+	printf("\n\t \t        ============================\n");
 	printf("\n");
 	for (i=0; i < filas; i++){
 		printf("\t\t\t");
@@ -253,6 +268,7 @@ void dibujarJuego(int filas, int columnas, tipocasilla **tablero){
 			}	
 				
 		}
+		printf("\n");
 		printf("\n");
 		
 	} 
@@ -279,7 +295,30 @@ int Ganar(int filas, int columnas,tipocasilla **tablero,int numeroMinas){
 
 }	
 
-
+void PonerBandera(int filas, int columnas, tipocasilla **tablero){
+	int x,y,r,z=0;
+	
+	while (z < (filas*columnas+10)){
+		printf("\n");
+		fflush(stdin);
+		printf("Digite la fila en la cual va a colocar la bandera: ");
+		scanf("%d",&x);
+		fflush(stdin);
+		printf("Digite la columna en la cual va a colocar la bandera: ");
+		scanf("%d",&y);
+		if (x > (filas-1) || x < 0 || y < 0 || y > (columnas-1) ){
+			printf("\nlas coordenas no estan en el tablero...Intentelo de nuevo\n");
+			printf("(Las filas y columnas van desde 0 hasta filas-1 \n y desde 0 hasta columnas-1 respectivamente.)\n");
+		}
+		else{
+			tablero[x][y].etiqueta = tablero[x][y].bandera;
+			dibujarJuego(filas,columnas,tablero);
+			break;
+		}
+		z++;
+	}
+	
+}	
 
 
 int AbrirCasilla(int filas,int columnas,tipocasilla **tablero,int numeroMinas){
@@ -303,13 +342,14 @@ int AbrirCasilla(int filas,int columnas,tipocasilla **tablero,int numeroMinas){
 			dibujarJuego(filas,columnas,tablero);
 			r=Ganar(filas,columnas,tablero,numeroMinas);
 			if (r==1){
-				break;
+				return 1;
 			}	
 			if (tablero[x][y].etiqueta == 'M'){
 				printf("\n");
 				printf("\t \t \t ----- GAME OVER -----\n");
-				break;
-			}	
+				return 1;
+			}
+			break;
 		}
 		z++;
 	}
@@ -317,6 +357,7 @@ int AbrirCasilla(int filas,int columnas,tipocasilla **tablero,int numeroMinas){
 }	
 
 int main(int argc,char *argv[]){
+	int t,true=1,r;
 	int filas = atoi(argv[1]);
 	int columnas = atoi(argv[2]);
 	int numeroMinas = atoi(argv[3]);
@@ -325,8 +366,18 @@ int main(int argc,char *argv[]){
 	AsignarMinas(filas,columnas,tablero,numeroMinas);
 	AsignarNumeros(filas,columnas,tablero);
 	DeterminarTipo(filas,columnas,tablero);
-	EmpezarJuego();
 	dibujarJuego(filas,columnas,tablero);
-	AbrirCasilla(filas,columnas,tablero,numeroMinas);
-	return 0;
+	while(true==1){
+		t=Preguntar();
+		if(t==0){
+			PonerBandera(filas,columnas,tablero);	
+		}
+		else if(t==1){
+			r=AbrirCasilla(filas,columnas,tablero,numeroMinas);
+			if(r==1){
+				break;	
+			}	
+		}
+		
+	}
 }
