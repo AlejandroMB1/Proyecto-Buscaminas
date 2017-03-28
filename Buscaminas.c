@@ -49,8 +49,178 @@ void AsignarMinas(int filas, int columnas, tipocasilla **tablero,int numeroMinas
 			
 }
 
-	
+int BordeAbajo(int i,int j,tipocasilla **tablero){
+	int m=0;
+	if (tablero[i-1][j].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i][j+1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i][j-1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i-1][j-1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i-1][j+1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}
 
+int NingunBorde(int i,int j,tipocasilla **tablero){
+	int m=0;
+	if (tablero[i+1][j].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i][j+1].tipo == 'M'){
+		m+=1;
+	}
+				
+	if (tablero[i][j-1].tipo == 'M'){
+		m+=1;
+	}
+				
+	if (tablero[i-1][j].tipo == 'M'){
+		m+=1;
+	}
+
+	if (tablero[i-1][j-1].tipo == 'M'){
+		m+=1;
+	}
+
+	if (tablero[i+1][j-1].tipo == 'M'){
+		m+=1;
+	}
+				
+	if (tablero[i-1][j+1].tipo == 'M'){
+		m+=1;
+	}
+				
+	if (tablero[i+1][j+1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}
+
+int BordeArriba(int i, int j, tipocasilla **tablero){
+	int m = 0;
+	if (tablero[i+1][j].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i][j+1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i][j-1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i+1][j-1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i+1][j+1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}
+
+int BordeDerecho(int i, int j, tipocasilla **tablero){	
+	int m;
+	if (tablero[i+1][j].tipo == 'M'){
+		m+=1;	
+	}
+	if (tablero[i-1][j].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i][j-1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i+1][j-1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i-1][j-1].tipo == 'M'){
+		m+=1;
+	}	
+	return m;
+}
+
+
+int BordeIzquierdo(int i,int j, tipocasilla **tablero){
+	int m=0;
+	if (tablero[i+1][j].tipo == 'M'){
+		m+=1;	
+	}
+	if (tablero[i-1][j].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i][j+1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i+1][j+1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i-1][j+1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}
+
+int EsquinaDAbajo(int i,int j, tipocasilla **tablero){
+	int m=0;
+	if (tablero[i][j-1].tipo == 'M'){
+		m+=1;
+	}	
+	if (tablero[i-1][j].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i-1][j-1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}
+
+int EsquinaDArriba(int i,int j, tipocasilla **tablero){
+	int m=0;
+	if (tablero[i+1][j].tipo == 'M'){
+		m+=1;
+	}	
+	if (tablero[i][j-1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i+1][j-1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}
+
+int EsquinaIAbajo(int i,int j, tipocasilla **tablero){
+	int m=0;
+	if (tablero[i][j+1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i-1][j].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i-1][j+1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}
+
+int EsquinaIArriba(int i,int j, tipocasilla **tablero){
+	int m=0;
+	if (tablero[i+1][j].tipo == 'M'){
+		m+=1;
+	}	
+	if (tablero[i][j+1].tipo == 'M'){
+		m+=1;
+	}
+	if (tablero[i+1][j+1].tipo == 'M'){
+		m+=1;
+	}
+	return m;
+}	
+	
 void AsignarNumeros(int filas, int columnas,tipocasilla **tablero){
 	int contador=0;
 	int i,j;
@@ -59,150 +229,41 @@ void AsignarNumeros(int filas, int columnas,tipocasilla **tablero){
 			contador=0;
 			if (tablero[i][j].tipo == 'C'){
 				if (i==0 && j==0){   //esquina izquierda arriba
-					if (tablero[i+1][j].tipo == 'M'){
-						contador+=1;
-					}	
-					if (tablero[i][j+1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i+1][j+1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = EsquinaIArriba(i,j,tablero);
+					
 				}
 				else if (i == (filas -1) && j==0){ //esquina izquierda abajo
-					if (tablero[i][j+1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i-1][j].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i-1][j+1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = EsquinaIAbajo(i,j,tablero);
+					
 				}
 				else if (i==0 && j == (columnas-1)){ //esquina derecha arriba
-					if (tablero[i+1][j].tipo == 'M'){
-						contador+=1;
-					}	
-					if (tablero[i][j-1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i+1][j-1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = EsquinaDArriba(i,j,tablero);
+					
 				}
 
 				else if (i==(filas-1) && j==(columnas-1)){ //esquina derecha abajo
-					if (tablero[i][j-1].tipo == 'M'){
-						contador+=1;
-					}	
-					if (tablero[i-1][j].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i-1][j-1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = EsquinaDAbajo(i,j,tablero);
+					
 				}
 				else if (j==0 && i!=0 && i!=(filas-1)){ //casillas con j = 0
-					if (tablero[i+1][j].tipo == 'M'){
-						contador+=1;	
-					}
-					if (tablero[i-1][j].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i][j+1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i+1][j+1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i-1][j+1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = BordeIzquierdo(i,j,tablero);
+					
 				}
 				else if (j==(columnas-1) && i!=0 && i!=(filas-1)){  //cuando j = columnas-1  
-					if (tablero[i+1][j].tipo == 'M'){
-						contador+=1;	
-					}
-					if (tablero[i-1][j].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i][j-1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i+1][j-1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i-1][j-1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = BordeDerecho(i,j,tablero);
+					
 				}	
 				else if (i==0 && j!=0 && j!=(columnas-1)){ //cuando i = 0
-					if (tablero[i+1][j].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i][j+1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i][j-1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i+1][j-1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i+1][j+1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = BordeArriba(i,j,tablero);
+					
 				}
 				else if (i==(filas-1) && j!=0 && j!=(columnas-1)){ //cuando i = (filas-1)
-					if (tablero[i-1][j].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i][j+1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i][j-1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i-1][j-1].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i-1][j+1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = BordeAbajo(i,j,tablero);
+					
 				}
 				
 				else if (i!=0 && j!=0 && i!=(filas-1) && j!=(columnas-1)){ //cuando la casilla no está en ningun borde
-					if (tablero[i+1][j].tipo == 'M'){
-						contador+=1;
-					}
-					if (tablero[i][j+1].tipo == 'M'){
-						contador+=1;
-					}
-				
-					if (tablero[i][j-1].tipo == 'M'){
-						contador+=1;
-					}
-				
-					if (tablero[i-1][j].tipo == 'M'){
-						contador+=1;
-					}
-
-					if (tablero[i-1][j-1].tipo == 'M'){
-						contador+=1;
-					}
-
-					if (tablero[i+1][j-1].tipo == 'M'){
-						contador+=1;
-					}
-				
-					if (tablero[i-1][j+1].tipo == 'M'){
-						contador+=1;
-					}
-				
-					if (tablero[i+1][j+1].tipo == 'M'){
-						contador+=1;
-					}
+					contador = NingunBorde(i,j,tablero);
 					
 				}		
 				
